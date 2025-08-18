@@ -25,6 +25,7 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
       - name: Load & cache dependencies
+        id: cache-deps
         uses: ./.github/actions/cached-deps
         with:
           caching: 'false'
@@ -38,6 +39,8 @@ jobs:
         with:
           name: website-artifacts
           path: dist
+      - name: Output information
+        run: echo "Chache used? $ {{ steps.cache-deps.outputs.used-cache }}"
   deploy:
     needs: build
     runs-on: ubuntu-latest
