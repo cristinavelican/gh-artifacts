@@ -26,7 +26,7 @@ jobs:
         with:
           caching: 'false'
       - name: Output information
-        run: echo "Chache used? $ {{ steps.cache-deps.outputs.used-cache }}"
+        run: echo ${{ steps.cache-deps.outputs.used-cache }}
   deploy:
     needs: build
     runs-on: ubuntu-latest
