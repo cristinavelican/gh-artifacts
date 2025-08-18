@@ -1,0 +1,35 @@
+name: JS Actions
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Load & cache dependencies
+        uses: ./.github/actions/cached-deps
+  build:
+    needs: test
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    outputs: 
+      script-file: ${{ steps.publish_js.outputs.script-file }}
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Load & cache dependencies
+        id: cache-deps
+        uses: ./.github/actions/cached-deps
+        with:
+          caching: 'false'
+      - name: Output information
+        run: echo ${{ steps.cache-deps.outputs.used-cache }}
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output contents
+        uses: ./github/actions/deploy-s3-javascript
