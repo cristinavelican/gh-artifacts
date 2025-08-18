@@ -8,12 +8,13 @@ inputs:
 outputs:
   used-cache:
     description: Whether the cache was hit
-    value: ${{ steps.install.output.cache }}
+    value: ${{ steps.install.outputs.cache }}
 runs:
   using: 'composite'
   steps:
     - name: Cache dependencies
       if: inputs.caching == 'true'
+      id: cache
       uses: actions/cache@v4
       with:
           path: ~/.npm
