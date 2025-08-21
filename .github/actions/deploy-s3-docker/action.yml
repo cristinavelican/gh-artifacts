@@ -1,0 +1,27 @@
+name: 'Deploy to AWS S3'
+description: 'Deploys a static website to AWS S3 using JavaScript'
+
+inputs:
+  bucket:
+    description: 'Name of the S3 bucket to deploy to'
+    required: true
+    default: 'my-s3-bucket'
+  bucket_region:
+    description: 'AWS region for the S3 bucket'
+    required: true
+    default: 'us-east-1'
+  access-key-id:
+    description: 'AWS Access Key ID'
+    required: true
+  secret-access-key:
+    description: 'AWS Secret Access Key'
+    required: true
+  dist_folder:
+    description: 'Path to the artifact to deploy'
+    required: true
+outputs:
+  website-url:
+    description: 'URL of the deployed website'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
